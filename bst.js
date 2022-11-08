@@ -105,6 +105,26 @@ class Tree {
             return this.root.levelOrderNodeList(this.root)
         }
     }
+
+    preOrder() {
+        if (this.root) {
+            return this.root.preOrderNodeList(this.root)
+        }
+    }
+
+    inOrder() {
+        if (this.root) {
+            return this.root.inOrderNodeList(this.root)
+        }
+    }
+
+    postOrder() {
+        if (this.root) {
+            return this.root.preOrderNodeList(this.root)
+        }
+    }
+
+    
 }
 
 let tree = new Tree(array)

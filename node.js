@@ -68,4 +68,39 @@ class Node{
         if (callbackFn) {return callbackFn(result)}
         return result
     }
+
+    preOrderNodeList(node, result = []) {
+        if (!node) return
+        else if (node) {
+            result.push(node.data)
+            this.preOrderNodeList(node.leftChild, result)
+            this.preOrderNodeList(node.rightChild, result)
+        }
+        return result
+    }
+
+    inOrderNodeList(node, result = []) {
+        if (!node) return
+        else if (node) {
+            this.preOrderNodeList(node.leftChild, result)
+            result.push(node.data)
+            this.preOrderNodeList(node.rightChild)
+        }
+        return result
+    }
+
+    postOrderNodeList(node, result = []) {
+        if (!node) return
+        else if (node) {
+            this.postOrderNodeList(node.leftChild, result)
+            this.postOrderNodeList(node.rightChild, result)
+            result.push(node.data)
+        }
+        return result
+    }
+
+    findHeight(node) {
+        if (!node) {alert('No tree found')}
+        
+    }
 }
