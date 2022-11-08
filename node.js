@@ -1,5 +1,3 @@
-let array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 
 class Node{
     constructor(data) {
@@ -56,56 +54,18 @@ class Node{
         return "data not found"
     }
 
-}
-
-class Tree {
-    constructor(array) {
-        this.array = [...new Set(array)].sort((a, b) => a - b)
-        this.root = this.buildTree(array)
-    }
-
-    buildTree(array) {
-        if (array.length === 0) {return null}
-        let mid = Math.floor(array.length/2)
-        let leftSide = array.slice(0, mid)
-        let rightSide = array.slice(mid+1)
-        let rootNode = new Node(array[mid])
-    
-        rootNode.leftChild = this.buildTree(leftSide)
-        rootNode.rightChild = this.buildTree(rightSide)
-        
-        return rootNode
-    }
-
-    insert(value) {
-        if (!this.root) {this.root = new Node(value)}
-        else {this.root.insertNode(value)}
-    }
-
-    delete(value) {
-        if (this.root) {this.root.deleteNode(value)}
-    }
-
-    find(value) {
-        if (this.root) {return this.root.findNode(value)}
-    }
-
-    prettyPrint = (node = this.root, prefix = '', isLeft = true) => {
-        if (node.rightChild !== null) {
-          this.prettyPrint(node.rightChild, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    levelOrderNodeList(callbackFn) {
+        let pointer = this
+        const queue = [pointer]
+        const result = []
+        while (queue.length > 1) {
+            result.push(pointer)
+            queue.splice(0,1)
+            if (pointer.leftChild) queue.push(pointer.leftChild)
+            if (pointer.rightChild) queue.push(pointer.rightChild)
+            current = queue[0]
         }
-        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-        if (node.leftChild !== null) {
-          this.prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-        }
-      }
-
-    levelOrder() {
-        if (this.root) {
-            return this.root.levelOrderNodeList(this.root)
-        }
+        if (callbackFn) {return callbackFn(result)}
+        return result
     }
 }
-
-let tree = new Tree(array)
-console.log(tree.prettyPrint())
