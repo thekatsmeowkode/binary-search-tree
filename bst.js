@@ -10,16 +10,38 @@ class Node{
     insertNode(value) {
         if (this.data === value) return
         else if (this.data > value) {
-            if (this.left) {this.left.insertNode(value)}
+            if (this.leftChild) {this.leftChild.insertNode(value)}
             else {new Node(value)}
         }
         else {
-            if (this.right) {this.right.insertNode(value)}
+            if (this.rightChild) {this.rightChild.insertNode(value)}
             else {new Node(value)}
         }
     }
 
-    deleteNode(value)
+    deleteNode(value) {
+        if (value < this.data && this.leftChild) {this.leftChild = this.leftChild.deleteNode(value)}
+        else if (value > this.data && this.rightChild) {this.rightChild = this.rightChild.deleteNode(value)}
+        else {
+            if (this.rightChild && this.leftChild) {
+                let minimum = this.rightChild.findMin()
+                this.data = minimum
+                this.rightChild = this.rightChild.deleteNode(minimum)
+        }
+            else if (this.leftChild) {return this.leftChild}
+            else if (this.rightChild) {return this.rightChild}
+            else return null;
+        }
+        return this;
+    }
+
+    findMin() {
+        let rightRoot = this
+        while (rightRoot.left) 
+        {current = current.leftChild}
+        return rightRoot.data
+    }
+
 }
 
 class Tree {
@@ -39,6 +61,10 @@ class Tree {
         rootNode.rightChild = this.buildTree(rightSide)
         
         return rootNode
+    }
+
+    find(value) {
+        
     }
 
 }
